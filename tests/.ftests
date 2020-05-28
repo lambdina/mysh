@@ -1,0 +1,141 @@
+#!/bin/bash
+#~ bguillem
+# functional tests for 42sh
+
+# FUNCTIONS
+
+exit_error () {
+    make fclean > /dev/null
+    echo -e "\e[91mERROR\e[39m"
+    exit 1
+}
+
+error_msg() {
+    echo -e "\e[91mERROR\e[39m:"
+    echo -e "42sh [\e[91m"$1"\e[39m]:\e[34m "$2"\e[39m"
+    echo -e "tcsh [\e[91m"$3"\e[39m]:\e[33m "$4"\e[39m"
+    echo ""
+    #  exit 1
+}
+
+success () {
+    echo -e "\e[32mSUCCESS\e[39m"
+    echo ""
+}
+
+compare_values () {
+    [ "$1" != "$3" ] && return 1
+    [ "$2" != "$4" ] && return 1
+    return 0
+}
+
+test_command () {
+    echo -e "\e[39mTesting \e[96m$1\e[39m:"
+
+    MYSH_LOG="$(printf "$1" | ./42sh 2>&1)"
+    MYSH_VALUE="$?"
+    TCSH_LOG="$(printf "$1" | tcsh 2>&1)"
+    TCSH_VALUE="$?"
+    if compare_values "$MYSH_LOG" "$MYSH_VALUE" "$TCSH_LOG" "$TCSH_VALUE"; then success;
+    else error_msg "$MYSH_VALUE" "$MYSH_LOG" "$TCSH_VALUE" "$TCSH_LOG"; fi
+}
+
+unit_test () {
+    make tests_run_clean  2>&1 > /dev/null
+    [ $? -eq 0 ] && echo -e "\e[32mSUCCESS\e[39m" || exit_error
+    echo ""
+    make re > /dev/null
+}
+
+# SCRIPT
+
+# removing old files
+make fclean 2>&1 > /dev/null
+rm unit_tests 2> /dev/null && rm *gc* 2> /dev/null
+
+# executing Criterion unit tests
+read -p "Execute unit tests ? [Y/n] " yn
+case $yn in
+    [Nn]* ) make re > /dev/null ;;
+    *) unit_test ;;
+esac
+
+
+# testing simple execs
+test_command "ls"
+test_command "ls -la"
+test_command "/bin/ls"
+test_command "     /bin/ls      -l      "
+test_command "/bin/ls     -la"
+test_command "\n"
+test_command "asd"
+test_command "exit 12"
+test_command "cd"
+test_command "echo '  aaaaaaa ' fortnite"
+test_command "echo \"  za rodina \" nahui"
+test_command "includes"
+test_command "./includes"
+test_command "       ls     -la   "
+test_command "ls -l | wc -l"
+test_command "ls; cat Makefile"
+test_command "ls include\"sources/exec\" > file && cat file; rm file || echo $?"
+test_command "ps -aux ( \"echo asd\""
+test_command "cd; </etc/hosts od -c | grep xx | wc >> /tmp/z -l ; cd - && echo \"OK\""
+test_command "which rm which"
+test_command "cd; pwd; cd -; pwd"
+test_command "ls -l | wc -l | echo"
+test_command "ls\""
+test_command "ls'"
+test_command "ls << Makefile | pwd"
+test_command "ls)"
+test_command "< .42history"
+test_command "ls |& cat"
+test_command "pwd; cd sources; pwd"
+test_command "cd ..; pwd; cd; pwd; cd -; pwd"
+test_command "cd -; pwd"
+test_command "ls | cat > mdr > mdr"
+test_command "echo $USER"
+test_command "cd asd asd"
+test_command "ls > file; cat file; rm file"
+test_command "ls > file; ls -la >> file; cat file; rm file"
+test_command "ls > mdr ; cat < mdr ; rm mdr"
+test_command "env > mdr ; rm mdr"
+test_command "wc -l << my_end"
+test_command "ls <"
+test_command "ls > include"
+test_command "ls < jenexistepas"
+test_command "ls >& jenexiste ."
+test_command "false || false || echo failed ; echo nevermind"
+test_command "true || false || echo failed ; echo nevermind"
+test_command "false || true || echo failed ; nevermind"
+test_command "true && true && echo success ; nevermind"
+test_command "true && false && echo success ; nevermind"
+test_command "false && false && echo success ; nevermind"
+test_command "false && true && echo success ; nevermind"
+test_command "false || true && false && echo success || echo failed"
+test_command "true && echo failed | tee"
+test_command "false && echo failed | tee"
+test_command "echo $USER > file; cat file; rm file"
+test_command "./sources/exec"
+test_command "ls >& nosuchfile && cat nosuchfile; rm nosuchfile"
+test_command "ls > mdr > mdr ; rm mdr"
+test_command "echo \"\"machin\"\""
+test_command "echo ''asd''"
+test_command "echo abcd > f1 > f2"
+test_command "echo abcd > f1 | wc"
+test_command "echo abcd >> f1 >> f2"
+test_command "echo abcd >> f1 | wc -w"
+test_command "echo abcd > f1 < f2"
+test_command "echo abcd > f1 << f2"
+test_command "echo abcd >> f1 < f2"
+test_command "echo abcd >> f1 << f2"
+test_command "> >"
+test_command "> |"
+test_command ">> >>"
+test_command ">> |"
+test_command "> <"
+test_command "> <<"
+test_command ">> <"
+test_command ">> <<"
+test_command "alias la \"ls -la\"\n la"
+test_command "alias lsa \"ls -a\"\n lsa\n alias lsa\n lsa"

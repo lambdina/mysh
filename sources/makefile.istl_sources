@@ -1,0 +1,2 @@
+ISTL_DIR = istl
+ISTL_MODULE = list_1.c list_2.c list_3.c list_4.c list_5.c vector_1.c vector_2.c vector_3.c vector_4.c vector_5.c hash_table_1.c hash_table_2.c hash_table_3.c hash_table_4.c utility_1.c utility_2.c utility_3.c utility_4.c cubic_bezier.c iterator_1.c iterator_2.c iterator_3.c iterator_4.c common_types_1.c common_types_2.c shared_ptr.c weak_ptr.c string_1.c string_2.c string_3.c string_4.c string_5.c observable_1.c astar_1.c astar_2.c astar_3.c astar_4.c

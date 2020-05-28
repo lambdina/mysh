@@ -1,0 +1,7 @@
+to run code:
+make
+./mysh
+to quit :
+exit
+to clean :
+make fclean
