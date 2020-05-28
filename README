@@ -1,3 +1,10 @@
+Le mysh est un shell interactif programmé en langage C s'appuyant sur le même comportement que le tcsh.
+Les pipes, redirections de droites et de gauches sont prises en compte.
+Les builts-in "cd", "echo", "where", "which", "env", "setenv" sont installés.
+Il est possible de lancer des commandes en langage UNIX.
+
+Des tests unitaires et fonctionnels ot été réalisés pour ce proejt.
+
 to run code:
 make
 ./mysh
