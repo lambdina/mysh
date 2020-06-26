@@ -3,7 +3,7 @@ Les pipes, redirections de droites et de gauches sont prises en compte.
 Les builts-in "cd", "echo", "where", "which", "env", "setenv" sont installés.
 Il est possible de lancer des commandes en langage UNIX.
 
-Des tests unitaires et fonctionnels ot été réalisés pour ce proejt.
+Des tests unitaires et fonctionnels ont été réalisés pour ce projet.
 
 to run code:
 make
