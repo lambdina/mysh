@@ -22,7 +22,7 @@ The mysh project is a school project we had to do in our first year. Short descr
 $ make ; ./mysh
 > 
 ```
-Then the infinite loop begins, asking you for a prompt !
+Then the infinite loop begins, prompting you a command to execute !
 
 ## Going further
 It was our first year and we weren't as familiar as we are now with clean code convention like you have to write one header per `.c`.
