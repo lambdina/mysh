@@ -8,7 +8,7 @@
 * [Contributors](https://www.github.com/NaadiQmmr/mysh#Contributors)
 
 ## Introduction
-The mysh project is a school project we had to do in our first year. Short description, it aims at acting like tcsh shell.
+The mysh project is a school project we had to do in our first year. Short description, it aims to acting like tcsh shell.
 
 ## Features
 * Basic command execution
